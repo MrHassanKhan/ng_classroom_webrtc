@@ -1,0 +1,39 @@
+<article>
+    <div id="widget-container" #widgetContainer style="position: fixed;bottom: 0;right: 0;left: 20%;height: 100%;border: 1px solid black; border-top:0; border-bottom: 0;"></div>
+    <video #screenViewer id="screen-viewer" [controls]="false" playsinline autoplay></video>
+    
+    <div style="width: 20%; height: 100%; position: absolute;left:0;">
+        <!-- <video id="main-video" 
+                [data-streamid]="localUserVideo.streamId"
+                [muted]="!localUserVideo.isAudio" [srcObject]="localUserVideo.src"
+                [controls]="false" playsinline autoplay></video> -->
+        <video class="main-video" #mainVideo [controls]="false" playsinline autoplay></video>
+        <div class="">
+                <span *ngIf="!this.mainDivVideo.nativeElement.muted" (click)="muteOrUnmuteMainDivVoice()"><mdb-icon fas icon="microphone"></mdb-icon></span>
+                <span *ngIf="this.mainDivVideo.nativeElement.muted" (click)="muteOrUnmuteMainDivVoice()"><mdb-icon fas icon="microphone-slash"></mdb-icon></span>
+        </div>
+        <div id="other-videos" class="other-videos" #otherVideos></div>
+        <hr>
+        <div style="padding: 5px 10px;">
+            <div id="onUserStatusChanged">
+              Active Users : {{activeUserList.join(',')}}
+            </div>
+        </div>
+    
+        <div style="margin-top: 20px;position: absolute;bottom: 0;background: white; padding-bottom: 20px; width: 94%">
+            <button class="btn btn-primary" (click)="ShareScreenMethod()" id="btn-chat-message">Share Screen</button>
+            <div id="conversation-panel" #conversationPanel></div>
+            <div id="key-press" #keyPress style="text-align: right; display: none; font-size: 11px;">
+                <span style="vertical-align: middle;"></span>
+                <img src="../../assets/icons/keypress.png" style="height: 12px; vertical-align: middle;">
+            </div>
+            <textarea id="txt-chat-message" (keyup)="txtChatMessageKeyUP()" #txtChatMessage></textarea>
+            <button [disabled]="activeUserList.length < 2" class="btn btn-primary" (click)="SendMessage()" id="btn-chat-message">Send</button>
+            <img [hidden]="activeUserList.length < 2" id="btn-attach-file" src="../../assets/icons/attach.png" title="Attach a File">
+            <img [hidden]="activeUserList.length < 2" id="btn-share-screen" (click)="ShareScreenMethod()" src="../../assets/icons/share.png" title="Share Your Screen">
+        </div>
+    
+        <canvas id="temp-stream-canvas" #tempStreamCanvas style="display: none;"></canvas>
+    </div>
+</article>
+    

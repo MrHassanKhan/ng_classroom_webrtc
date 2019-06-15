@@ -1,0 +1,88 @@
+.extra-controls {
+    position: absolute;
+    right: 21%;
+}
+#btn-comments {
+  color: red;
+  margin-top: 5px;
+  font-size: 24px;
+  text-shadow: 1px 1px white;
+}
+.other-videos {
+    margin-top: 5px;
+}
+video{
+    transform: rotateY(180deg);
+    -webkit-transform:rotateY(180deg); /* Safari and Chrome */
+    -moz-transform:rotateY(180deg); /* Firefox */
+}
+div.other-videos > video {
+        width: 45%;
+        margin: 5px;
+        border: 1px solid black;
+        padding: 1px;
+        border-radius: 3px;
+}
+#txt-chat-message {
+    width: 100%;
+    resize: vertical;
+    margin: 5px;
+    margin-right: 0;
+    min-height: 30px;
+}
+#btn-chat-message {
+    margin: 5px;
+}
+#conversation-panel {
+    margin-bottom: 20px;
+    text-align: left;
+    max-height: 200px;
+    overflow: auto;
+    border-top: 1px solid #E5E5E5;
+    width: 106%;
+}
+#conversation-panel .message {
+    border-bottom: 1px solid #E5E5E5;
+    padding: 5px 10px;
+}
+#conversation-panel .message img, #conversation-panel .message video, #conversation-panel .message iframe {
+    max-width: 100%;
+}
+.main-video {
+    width: 100%;
+    margin-top: -9px;
+    border-bottom: 1px solid #121010;
+    display: none;
+    padding-bottom: 1px;
+}
+hr {
+    height: 1px;
+    border: 0;
+    background: #E5E5E5;
+}
+#btn-attach-file {
+    width: 25px;
+    vertical-align: middle;
+    cursor: pointer;
+    display: none;
+}
+#btn-share-screen {
+    width: 25px;
+    vertical-align: middle;
+    cursor: pointer;
+    display: none;
+}
+.checkmark {
+    display:none;
+    width: 15px;
+    vertical-align: middle;
+}
+#screen-viewer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999999999999;
+    display: none;
+}

@@ -1,0 +1,145 @@
+<!--Navbar-->
+<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark cyan" [containerInside]="false">
+  <!-- Navbar brand -->
+  <mdb-navbar-brand><a class="navbar-brand" href="#">Dashboard</a></mdb-navbar-brand>
+  <!-- Collapsible content -->
+  <links>
+    <!-- Links -->
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item" (click)="crtNewRoomForm.reset(); newRoom.show()">
+        <a class="nav-link waves-light" mdbWavesEffect><mdb-icon fas icon="comment-alt"></mdb-icon> Create New Room<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item" (click)="joinRoomForm.reset(); joinRoom.show()">
+        <a class="nav-link waves-light" mdbWavesEffect><mdb-icon fas icon="comment"></mdb-icon> Join Room</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link waves-light" mdbWavesEffect><mdb-icon fas icon="user"></mdb-icon> Live Rooms: {{roomList.length}}</a>
+      </li>
+    </ul>
+    <!-- Links -->
+  </links>
+  <!-- Collapsible content -->
+</mdb-navbar>
+<!--/.Navbar-->
+<main>
+    <div class="container" style="height:700px;">
+        <div class="row pt-5">
+          <table mdbTable>
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">RoomID</th>
+                  <th scope="col">OwnerID</th>
+                  <th scope="col">Session</th>
+                  <th scope="col">Extra</th>
+                  <th scope="col">Participants</th>
+                  <th scope="col">Join</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr mdbTableCol *ngFor="let room of roomList; let i=index;">
+                  <th scope="row">{{i + 1}}</th>
+                  <td>{{room.sessionid}}</td>
+                  <td>{{room.owner}}</td>
+                  <td>{{room.session | json}}</td>
+                  <td>{{room.extra | json}}</td>
+                  <td>
+                    <span *ngIf="room.participants.length > 0">
+                      <span *ngFor="let part of room.participants; let y=index;"> 
+                        <span>{{ y+1 }} : {{ part }} </span> <br>
+                      </span>
+                    </span>
+                  </td>
+                  <td>
+                      <button (click)="JoinRoomInList(room); joinRoom.show()" type="button" mdbBtn color="info" mdbWavesEffect>Join</button>
+                  </td>
+                </tr>
+                <tr *ngIf="roomList.length==0">
+                  <td colspan="7">No active room found for this demo</td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+
+
+
+<!-- Create New Room -->
+
+<div mdbModal #newRoom="mdbModal" class="modal fade" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <!--Header-->
+      <!-- <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Create New Room</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="newRoom.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div> -->
+      <!--Body-->
+      <div class="modal-body">
+        <!-- Default form login -->
+        <form class="text-center border border-light p-5" [formGroup]="crtNewRoomForm">
+
+            <p class="h4 mb-4">Create New Room</p>
+          
+            <!-- Email -->
+            <input type="text" formControlName="roomid" id="roomId" class="form-control mb-4" placeholder="Enter Room ID">
+          
+            <!-- Password -->
+            <input type="text" formControlName="fullName" id="name" class="form-control mb-4" placeholder="Enter Your Name">
+            <input type="text" *ngIf="crtNewRoomForm.get('checkRoomPassword').value===true" formControlName="roomPassword" id="roomPassword" class="form-control mb-4" placeholder="Enter Room Password">
+            <mdb-checkbox [default]="false" formControlName="checkRoomPassword">Set Password ?</mdb-checkbox>
+            <!-- <mdb-checkbox [default]="false">Hide Room</mdb-checkbox> -->
+        </form>
+  <!-- Default form login -->
+      </div>
+      <!--Footer-->
+      <div class="modal-footer">
+        <button type="button" mdbBtn color="primary" outline="true" class="waves-light" mdbWavesEffect data-dismiss="modal" (click)="newRoom.hide()">Close</button>
+        <button mdbBtn color="primary" class="waves-light" [disabled]="!crtNewRoomForm.valid" (click)="CreateNewRoom(newRoom)" mdbWavesEffect>Create</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div mdbModal #joinRoom="mdbModal" class="modal fade" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <!--Header-->
+      <!-- <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Create New Room</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="newRoom.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div> -->
+      <!--Body-->
+      <div class="modal-body">
+        <!-- Default form login -->
+        <form class="text-center border border-light p-5" [formGroup]="joinRoomForm">
+
+            <p class="h4 mb-4">Join Room</p>
+          
+            <!-- Email -->
+            <input type="text" formControlName="roomid" id="roomId" class="form-control mb-4" placeholder="Enter Room ID">
+          
+            <!-- Password -->
+            <input type="text" formControlName="fullName" id="name" class="form-control mb-4" placeholder="Enter Your Name">
+            <input type="text" *ngIf="joinRoomForm.get('checkRoomPassword').value===true" formControlName="roomPassword" id="roomPassword" class="form-control mb-4" placeholder="Enter Room Password">
+            <!-- <mdb-checkbox [default]="false" formControlName="checkRoomPassword">Set Password ?</mdb-checkbox> -->
+            <!-- <mdb-checkbox [default]="false">Hide Room</mdb-checkbox> -->
+        </form>
+  <!-- Default form login -->
+      </div>
+      <!--Footer-->
+      <div class="modal-footer">
+        <button type="button" mdbBtn color="primary" outline="true" class="waves-light" mdbWavesEffect data-dismiss="modal" (click)="joinRoom.hide()">Close</button>
+        <button mdbBtn color="primary" class="waves-light" [disabled]="!joinRoomForm.valid" (click)="JoinSelectedRoom(joinRoom)" mdbWavesEffect>Join</button>
+      </div>
+    </div>
+  </div>
+</div>
